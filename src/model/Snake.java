@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 class Snake {
     public Direction moveDirection = Direction.RIGHT;
-    public ArrayList<Tuple> snakePositions = new ArrayList<>();
+    public final ArrayList<Tuple> snakePositions = new ArrayList<>();
     private boolean needToReturn = false;
     public boolean inPortal = false;
     public boolean replaceAfterDivingInPortal = false;
@@ -16,7 +16,7 @@ class Snake {
     public Field field;
     public boolean lastLevel = false;
     public boolean ShouldInvalidDie = false;
-    private Tuple portalPosition = new Tuple(3, 4);
+    private final Tuple portalPosition = new Tuple(3, 4);
     private int drunkCounter = 0;
     private int poisonCounter = 0;
     private Tuple lastDisappearedBodyPart;

@@ -5,8 +5,8 @@ import view.EditorView;
 import view.View;
 
 public class levelEditorThreadsController extends Thread {
-    private Field field;
-    private View window;
+    private final Field field;
+    private final View window;
 
     public levelEditorThreadsController() {
         field = new Field(20, 20);

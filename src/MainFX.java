@@ -20,10 +20,8 @@ import javafx.scene.canvas.GraphicsContext;
 
 
 public class MainFX extends Application implements View {
-    private static int rowsCount = 20;
-    private static int columnsCount = 20;
     private GraphicsContext graphics;
-    public Map<Images, Image> images = new HashMap<>();
+    public final Map<Images, Image> images = new HashMap<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -117,6 +115,8 @@ public class MainFX extends Application implements View {
 
     public void repaint(Field field) {
         graphics.drawImage(images.get(Images.BACKGROUND),0,  0, 600, 600);
+        int columnsCount = 20;
+        int rowsCount = 20;
         for (int i = 0; i < rowsCount; i++)
             for (int j = 0; j < columnsCount; j++) {
                 Entity entity = field.getObjectAt(i, j);

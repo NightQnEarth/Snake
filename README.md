@@ -1,2 +1,1 @@
 # Snake
-Great game!

@@ -15,20 +15,18 @@ import java.util.Map;
 
 public class EditorView extends JFrame implements View {
     private static final long serialVersionUID = -2542001418764869760L;
-    private static int rowsCount = 20;
-    private static int columnsCount = 20;
-    private static int verticalOffset = 32;
-    private static int cellSize = 30;
-    private static int fieldWidth = cellSize * columnsCount;
-    private static int fieldHeight = cellSize * rowsCount;
-    private static int panelSize = 100;
-    private Graphics2D graphics;
-    private JPanel panel;
-    private JPanel buttonPanel;
+    private static final int rowsCount = 20;
+    private static final int columnsCount = 20;
+    private static final int verticalOffset = 32;
+    private static final int cellSize = 30;
+    private static final int fieldWidth = cellSize * columnsCount;
+    private static final int fieldHeight = cellSize * rowsCount;
+    private static final int panelSize = 100;
+    private final Graphics2D graphics;
     private Entity ent;
-    private Selector selector;
-    public Map<Images, BufferedImage> images = new HashMap<>();
-    private Color transparent = new Color(0, 0, 0, 0);
+    private final Selector selector;
+    public final Map<Images, BufferedImage> images = new HashMap<>();
+    private final Color transparent = new Color(0, 0, 0, 0);
 
     public EditorView(Field field) {
         this.setTitle("Snake");
@@ -38,11 +36,11 @@ public class EditorView extends JFrame implements View {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.graphics = (Graphics2D)getGraphics();
-        this.panel = new JPanel();
+        JPanel panel = new JPanel();
         this.ent = new Food();
         this.selector = new Selector();
 
-        buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
         TextField textField = new TextField(8);
 
         Button button = new Button("Save!");
@@ -122,7 +120,7 @@ public class EditorView extends JFrame implements View {
         try {
             image = ImageIO.read(new File(pathName));
         }
-        catch (IOException e) {
+        catch (IOException ignored) {
         }
         this.images.put(enumImage, image);
     }
@@ -176,7 +174,7 @@ public class EditorView extends JFrame implements View {
                 out.writeObject(field);
                 out.close();
                 fileOut.close();
-                System.out.printf("Serialized data is saved in " + filename);
+                System.out.print("Serialized data is saved in " + filename);
             }
         }
         catch (IOException i) {

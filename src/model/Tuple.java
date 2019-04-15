@@ -1,8 +1,8 @@
 package model;
 
 public class Tuple {
-    private int row;
-    private int column;
+    private final int row;
+    private final int column;
 
     public Tuple(int row, int column) {
         this.row = row;

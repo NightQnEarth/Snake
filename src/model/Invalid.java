@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 class Invalid {
     public Direction moveDirection = Direction.RIGHT;
-    public ArrayList<Tuple> invalidPositions = new ArrayList<>();
-    public boolean inPortal = false;
+    public final ArrayList<Tuple> invalidPositions = new ArrayList<>();
+    public final boolean inPortal = false;
     public boolean replaceAfterDivingInPortal = false;
-    public Entity[][] entities;
-    public Field field;
+    public final Entity[][] entities;
+    public final Field field;
     private int poisonCounter = 0;
-    public ArrayList<Tuple> snakePositions = new ArrayList<>();
+    public final ArrayList<Tuple> snakePositions = new ArrayList<>();
     private Tuple lastDisappearedBodyPart;
     public boolean ShouldSnakeDie = false;
 
@@ -44,7 +44,7 @@ class Invalid {
 
     private void findDirection() {
         findSnakeOnTheMap();
-        int minDist = 100000;  // ahahahah
+        int minDist = 100000;
         Tuple ans = new Tuple(0, 0);
         Tuple headInvalid = invalidPositions.get(invalidPositions.size() - 1);
         for (Tuple partOfSnake : snakePositions) {
@@ -84,7 +84,7 @@ class Invalid {
                 moveDirection = Direction.LEFT;
         }
     }
-    boolean update() {
+    void update() {
         shortenInvalid();
         findDirection();
 
@@ -97,7 +97,7 @@ class Invalid {
                     moveDirection = Direction.LEFT;
             }
             invalidPositions.remove(invalidPositions.size() - 1);
-            return false;
+            return;
         }
 
         if (isCollidedWithPoison()) {
@@ -105,13 +105,13 @@ class Invalid {
                 Tuple poisonPosition = invalidPositions.get(invalidPositions.size() - 1);
                 entities[poisonPosition.getRow()][poisonPosition.getColumn()] = null;
                 invalidPositions.remove(invalidPositions.size() - 1);
-                return false;
+                return;
             }
             poisonCounter += 3;
         }
         ShouldSnakeDie = isCollidedWithSnake();
         if (ShouldSnakeDie)
-            return true;
+            return;
         if (isCollidedWithFood()) {
             replaceInvalid(true);
             field.spawnFood();
@@ -124,7 +124,6 @@ class Invalid {
         else
             invalidPositions.remove(0);
 
-        return true;
     }
 
     private int setAngleAfterTurnBody(Tuple objectForTurnPos, Tuple turnBodyObjectPos) {
@@ -234,7 +233,7 @@ class Invalid {
         invalidPositions.remove(0);
     }
 
-    public boolean isDying() {
+    public void isDying() {
         if (invalidPositions.size() > 0) {
             Tuple last = invalidPositions.get(invalidPositions.size() - 1);
             invalidPositions.remove(invalidPositions.size() - 1);
@@ -245,7 +244,7 @@ class Invalid {
                 field.field[lastDisappearedBodyPart.getRow()][lastDisappearedBodyPart.getColumn()] =
                         null;
             lastDisappearedBodyPart = last;
-            return true;
+            return;
         }
 
         if (lastDisappearedBodyPart != null) {
@@ -253,10 +252,8 @@ class Invalid {
                     instanceof SnakeEntity))
                 field.field[lastDisappearedBodyPart.getRow()][lastDisappearedBodyPart.getColumn()] = null;
             lastDisappearedBodyPart = null;
-            return true;
         }
 
-        return false;
     }
 
     private boolean isCollidedWithFood() {

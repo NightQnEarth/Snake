@@ -4,22 +4,18 @@ import model.Game;
 import view.View;
 import view.Window;
 
+import java.util.Objects;
+
 public class ThreadsController extends Thread {
-    private Game game;
-    private long speed = 250;
+    private final Game game;
     public static Direction controllerDirection = Direction.RIGHT;
-    private View window;
+    private final View window;
     private boolean inGame = true;
-    public String path;
 
 
     public ThreadsController(View _window, String path) {
         game = new Game(path);
-        if (_window == null)
-            window = new Window();
-        else
-            window = _window;
-        this.path = path;
+        window = Objects.requireNonNullElseGet(_window, Window::new);
     }
 
     public void run() {
@@ -37,6 +33,7 @@ public class ThreadsController extends Thread {
 
     private void pause() {
         try {
+            long speed = 250;
             sleep(speed);
         }
         catch (InterruptedException e) {

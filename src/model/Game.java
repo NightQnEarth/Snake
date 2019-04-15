@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Game {
     public Field field;
@@ -13,7 +14,7 @@ public class Game {
     public int counter = 0;
     private int alcoholCount;
     private int poisonCount;
-    public ArrayList<String> levels = new ArrayList<>();
+    public final ArrayList<String> levels = new ArrayList<>();
     public int currentLevel = 0;
     public Invalid invalid;
     public boolean levelChanged = false;
@@ -25,7 +26,7 @@ public class Game {
 
         if (path != null) {
             field = deserializeField(path);
-            snake = new Snake(field);
+            snake = new Snake(Objects.requireNonNull(field));
             invalid = new Invalid(field);
         }
         else
@@ -39,7 +40,7 @@ public class Game {
             if (currentLevel < levels.size()) {
                 field = deserializeField(levels.get(currentLevel));
                 snake.field = field;
-                snake.entities = field.field;
+                snake.entities = Objects.requireNonNull(field).field;
             }
             if (currentLevel == levels.size() - 1)
                 snake.lastLevel = true;

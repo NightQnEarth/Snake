@@ -18,12 +18,11 @@ import java.util.Map;
 
 public class Window extends JFrame implements View {
     private static final long serialVersionUID = -2542001418764869760L;
-    private static int rowsCount = 20;
-    private static int columnsCount = 20;
-    private Graphics2D graphics;
-    private JPanel panel;
-    public Map<Images, BufferedImage> images = new HashMap<>();
-    private Color transparent = new Color(0, 0, 0, 0);
+    private static final int rowsCount = 20;
+    private static final int columnsCount = 20;
+    private final Graphics2D graphics;
+    public final Map<Images, BufferedImage> images = new HashMap<>();
+    private final Color transparent = new Color(0, 0, 0, 0);
     private Field previousStepField;
     public int repaintedCount = 0;
 
@@ -35,7 +34,7 @@ public class Window extends JFrame implements View {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addKeyListener(new KeyboardListener());
         this.graphics = (Graphics2D) getGraphics();
-        this.panel = new JPanel();
+        JPanel panel = new JPanel();
         panel.paintComponents(graphics);
 
         imagePut(Images.BACKGROUND, "src\\images" + File.separator + "background.jpg");
@@ -69,7 +68,7 @@ public class Window extends JFrame implements View {
         try {
             image = ImageIO.read(new File(pathName));
         }
-        catch (IOException e) {
+        catch (IOException ignored) {
         }
         this.images.put(enumImage, image);
     }
